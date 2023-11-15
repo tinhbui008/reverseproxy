@@ -1,0 +1,44 @@
+version: '3.4'
+
+services:
+   productapi:
+     container_name: product
+     image: ${DOCKER_REGISTRY-}product
+     build:
+       context: .
+       dockerfile: ProductService/Dockerfile
+     ports:
+       - 5001:80
+     networks:
+       - backend
+   
+   userapi:
+     container_name: user
+     image: ${DOCKER_REGISTRY-}user
+     build:
+       context: .
+       dockerfile: UserService/Dockerfile
+     ports:
+       - 5002:80
+     networks:
+       - backend
+
+   yarp:
+    container_name: yarp
+    image: ${DOCKER_REGISTRY-}yarp
+    build:
+      context: .
+      dockerfile: ApiGateway/Dockerfile
+    ports:
+      - 5000:80
+    networks:
+      - backend
+
+#volumes:
+#  pgvol:
+#  #pgadmin:
+#  upload_data:
+networks:
+  backend:
+    driver: bridge
+    external: true
