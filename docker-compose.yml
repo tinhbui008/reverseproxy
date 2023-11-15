@@ -23,16 +23,16 @@ services:
      networks:
        - backend
 
-   yarp:
-    container_name: yarp
-    image: ${DOCKER_REGISTRY-}yarp
-    build:
-      context: .
-      dockerfile: ApiGateway/Dockerfile
-    ports:
-      - 5000:80
-    networks:
-      - backend
+   #yarp:
+   # container_name: yarp
+   # image: ${DOCKER_REGISTRY-}yarp
+   # build:
+   #   context: .
+   #   dockerfile: ApiGateway/Dockerfile
+   # ports:
+   #   - 5000:80
+   # networks:
+   #   - backend
 
 #volumes:
 #  pgvol:
