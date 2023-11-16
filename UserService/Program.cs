@@ -33,5 +33,5 @@ app.UseAuthorization();
 
 app.MapControllers();
 app.UseCors("CorsPolicy");
-//app.UseOcelot().Wait();
+app.UseOcelot().Wait();
 app.Run();
