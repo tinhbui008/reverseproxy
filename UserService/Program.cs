@@ -1,4 +1,5 @@
 using Ocelot.DependencyInjection;
+using Ocelot.Middleware;
 
 var builder = WebApplication.CreateBuilder(args);
 builder.Services.AddControllers();
@@ -9,8 +10,7 @@ builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy",
         builder => builder
-            //.WithOrigins("https://meego.vn")
-            .AllowAnyOrigin()
+            .WithOrigins("https://meego.vn")
             .AllowAnyMethod()
             .AllowAnyHeader()
             .AllowCredentials());
