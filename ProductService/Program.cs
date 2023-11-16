@@ -12,11 +12,11 @@ builder.Services.AddOcelot(builder.Configuration);
 builder.Services.AddCors(options =>
 {
     options.AddPolicy("CorsPolicy",
-        builder => builder.AllowAnyOrigin()
+        builder => builder
+            .WithOrigins("https://meego.vn")
             .AllowAnyMethod()
-            .AllowCredentials()
-            .SetIsOriginAllowed(hostName => true)
-            .AllowAnyHeader());
+            .AllowAnyHeader()
+            .AllowCredentials());
 });
 var app = builder.Build();
 
@@ -38,9 +38,7 @@ if (app.Environment.IsDevelopment())
 }
 //app.MapGet("/api/product", () => "Hello World!, I'm Product");
 app.UseHttpsRedirection();
-
 app.UseAuthorization();
-
 app.MapControllers();
 app.UseCors("CorsPolicy");
 app.UseOcelot().Wait();
