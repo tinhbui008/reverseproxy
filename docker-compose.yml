@@ -9,7 +9,7 @@ services:
        context: .
        dockerfile: ProductService/Dockerfile
      ports:
-       - 5001:80
+       - 8001:80
      networks:
        - backend-demo
    
@@ -20,7 +20,7 @@ services:
        context: .
        dockerfile: UserService/Dockerfile
      ports:
-       - 5002:80
+       - 8002:80
      networks:
        - backend-demo   
 
