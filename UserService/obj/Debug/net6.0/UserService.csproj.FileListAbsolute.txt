@@ -33,3 +33,11 @@ D:\my-yarp\UserService\obj\Debug\net6.0\refint\UserService.dll
 D:\my-yarp\UserService\obj\Debug\net6.0\UserService.pdb
 D:\my-yarp\UserService\obj\Debug\net6.0\UserService.genruntimeconfig.cache
 D:\my-yarp\UserService\obj\Debug\net6.0\ref\UserService.dll
+D:\my-yarp\UserService\bin\Debug\net6.0\FluentValidation.dll
+D:\my-yarp\UserService\bin\Debug\net6.0\Microsoft.AspNetCore.JsonPatch.dll
+D:\my-yarp\UserService\bin\Debug\net6.0\Microsoft.AspNetCore.MiddlewareAnalysis.dll
+D:\my-yarp\UserService\bin\Debug\net6.0\Microsoft.AspNetCore.Mvc.NewtonsoftJson.dll
+D:\my-yarp\UserService\bin\Debug\net6.0\Microsoft.Extensions.DiagnosticAdapter.dll
+D:\my-yarp\UserService\bin\Debug\net6.0\Newtonsoft.Json.dll
+D:\my-yarp\UserService\bin\Debug\net6.0\Newtonsoft.Json.Bson.dll
+D:\my-yarp\UserService\bin\Debug\net6.0\Ocelot.dll
