@@ -11,7 +11,7 @@ services:
      ports:
        - 5001:80
      networks:
-       - backend
+       - backend-demo
    
    userapi:
      container_name: user
@@ -22,7 +22,7 @@ services:
      ports:
        - 5002:80
      networks:
-       - backend
+       - backend-demo   
 
    #yarp:
    # container_name: yarp
@@ -40,6 +40,6 @@ services:
 #  #pgadmin:
 #  upload_data:
 networks:
-  backend:
+  backend-demo:
     driver: bridge
     external: true
