@@ -1,66 +1,145 @@
+#version: '3.4'
+
+
+#services:
+#   #nginx-proxy:
+#   #  image: nginxproxy/nginx-proxy
+#   #  ports:
+#   #    - 80:80
+#   #    - 443:443
+#   #  privileged: true
+#   #  environment:
+#   #    - ENABLE_IPV6=true
+#   #  volumes:
+#   #    - ~/nginx/vhost.d:/etc/nginx/vhost.d
+#   #    - ~/nginx-certs:/etc/nginx/certs:ro
+#   #    - ~/nginx-conf:/etc/nginx/conf.d
+#   #    - ~/nginx-logs:/var/log/nginx
+#   #    - /usr/share/nginx/html
+#   #    - /var/run/docker.sock:/tmp/docker.sock:ro
+
+#   productapi:
+#     container_name: product
+#     image: ${DOCKER_REGISTRY-}product
+#     build:
+#       context: .
+#       dockerfile: ProductService/Dockerfile
+#     ports:
+#       - 5001:80
+#       - 5010:443
+#     environment:
+#       - ASPNETCORE_URLS=https://+;http://+
+#       #- PUBLIC_URL=https://localhost:5001
+#       - ASPNETCORE_HTTPS_PORT=5010
+#     networks:
+#       - backend-demo
+   
+#   userapi:
+#     container_name: user
+#     image: ${DOCKER_REGISTRY-}user
+#     build:
+#       context: .
+#       dockerfile: UserService/Dockerfile
+#     ports:
+#       - 5002:80
+#     networks:
+#       - backend-demo   
+
+#   #yarp:
+#   # container_name: yarp
+#   # image: ${DOCKER_REGISTRY-}yarp
+#   # build:
+#   #   context: .
+#   #   dockerfile: ApiGateway/Dockerfile
+#   # ports:
+#   #   - 5000:80
+#   # networks:
+#   #   - backend
+
+##volumes:
+##  pgvol:
+##  #pgadmin:
+##  upload_data:
+#networks:
+#  backend-demo:
+#    driver: bridge
+#    external: true
+
+
+
+
+
 version: '3.4'
 
-
 services:
-   #nginx-proxy:
-   #  image: nginxproxy/nginx-proxy
-   #  ports:
-   #    - 80:80
-   #    - 443:443
-   #  privileged: true
-   #  environment:
-   #    - ENABLE_IPV6=true
-   #  volumes:
-   #    - ~/nginx/vhost.d:/etc/nginx/vhost.d
-   #    - ~/nginx-certs:/etc/nginx/certs:ro
-   #    - ~/nginx-conf:/etc/nginx/conf.d
-   #    - ~/nginx-logs:/var/log/nginx
-   #    - /usr/share/nginx/html
-   #    - /var/run/docker.sock:/tmp/docker.sock:ro
+  productapi:
+    container_name: product
+    image: ${DOCKER_REGISTRY-}product
+    build:
+      context: .
+      dockerfile: ProductService/Dockerfile
+    ports:
+      - 5001:80
+    environment:
+     VIRTUAL_HOST: dev.webchuyenghiep.com.vn
+     LETSENCRYPT_HOST: dev.webchuyenghiep.com.vn
+     LETSENCRYPT_EMAIL: buitrungtinh1302096@gmail.com
+    networks:
+      - backend
 
-   productapi:
-     container_name: product
-     image: ${DOCKER_REGISTRY-}product
-     build:
-       context: .
-       dockerfile: ProductService/Dockerfile
-     ports:
-       - 5001:80
-       - 5010:443
-     environment:
-       - ASPNETCORE_URLS=https://+;http://+
-       #- PUBLIC_URL=https://localhost:5001
-       - ASPNETCORE_HTTPS_PORT=5010
-     networks:
-       - backend-demo
-   
-   userapi:
-     container_name: user
-     image: ${DOCKER_REGISTRY-}user
-     build:
-       context: .
-       dockerfile: UserService/Dockerfile
-     ports:
-       - 5002:80
-     networks:
-       - backend-demo   
 
-   #yarp:
-   # container_name: yarp
-   # image: ${DOCKER_REGISTRY-}yarp
-   # build:
-   #   context: .
-   #   dockerfile: ApiGateway/Dockerfile
-   # ports:
-   #   - 5000:80
-   # networks:
-   #   - backend
+  #app:
+  #  build: ./web
+  #  expose:
+  #    - "8080"
+  #  restart: always
+  #  networks:
+  #    - application
+  #  environment:
+  #    # in production we should redirect to SSL but in dev set this to noredirect
+  #    HTTPS_METHOD: "${HTTPS_METHOD}"
 
-#volumes:
-#  pgvol:
-#  #pgadmin:
-#  upload_data:
+  #    # in development these should be localhost but in production these should be the domain you are using
+  #    VIRTUAL_HOST: "${VIRTUAL_HOST}"
+  #    LETSENCRYPT_HOST: "${LETSENCRYPT_HOST}"
+      #LETSENCRYPT_EMAIL: "${LETSENCRYPT_EMAIL}"
+
+  nginx-proxy:
+    image: jwilder/nginx-proxy:alpine
+    ports:
+      - "80:80"
+      - "443:443"
+    volumes:
+      - static:/app/app/static/
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - certs:/etc/nginx/certs
+      - /var/run/docker.sock:/tmp/docker.sock:ro
+    networks:
+      - backend
+    labels:
+      - "com.github.jrcs.letsencrypt_nginx_proxy_companion.nginx_proxy"
+
+  letsencrypt:
+    restart: always
+    container_name: letsencrypt
+    image: jrcs/letsencrypt-nginx-proxy-companion
+    volumes:
+      - vhost:/etc/nginx/vhost.d
+      - html:/usr/share/nginx/html
+      - certs:/etc/nginx/certs
+      - /var/run/docker.sock:/var/run/docker.sock:ro
+    networks:
+      - backend
+    depends_on:
+      - nginx-proxy
+    profiles: ["production"] # only run the lets encrypt service in production
+
+volumes:
+  html:
+  certs:
+  vhost:
+  static:
+
 networks:
-  backend-demo:
-    driver: bridge
-    external: true
+  backend:
