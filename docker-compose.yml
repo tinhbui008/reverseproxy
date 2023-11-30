@@ -26,11 +26,11 @@ services:
        dockerfile: ProductService/Dockerfile
      ports:
        - 5001:80
+       - 5010:443
      environment:
-       - VIRTUAL_HOST=dev.webchuyenghiep.com.vn
-       - VIRTUAL_PORT=5001
-       - LETSENCRYPT_HOST=dev.webchuyenghiep.com.vn
-       - LETSENCRYPT_EMAIL=buitrungtinh130296@gmail.com
+       - ASPNETCORE_URLS=https://+;http://+
+       - PUBLIC_URL=https://localhost:5001
+       - ASPNETCORE_HTTPS_PORT=5010
      networks:
        - backend-demo
    
