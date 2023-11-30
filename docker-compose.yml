@@ -2,6 +2,22 @@ version: '3.4'
 
 
 services:
+   #nginx-proxy:
+   #  image: nginxproxy/nginx-proxy
+   #  ports:
+   #    - 80:80
+   #    - 443:443
+   #  privileged: true
+   #  environment:
+   #    - ENABLE_IPV6=true
+   #  volumes:
+   #    - ~/nginx/vhost.d:/etc/nginx/vhost.d
+   #    - ~/nginx-certs:/etc/nginx/certs:ro
+   #    - ~/nginx-conf:/etc/nginx/conf.d
+   #    - ~/nginx-logs:/var/log/nginx
+   #    - /usr/share/nginx/html
+   #    - /var/run/docker.sock:/tmp/docker.sock:ro
+
    productapi:
      container_name: product
      image: ${DOCKER_REGISTRY-}product
@@ -12,7 +28,7 @@ services:
        - 5001:80
      environment:
        - VIRTUAL_HOST=dev.webchuyenghiep.com.vn
-       - VIRTUAL_PORT=80
+       - VIRTUAL_PORT=5001
        - LETSENCRYPT_HOST=dev.webchuyenghiep.com.vn
        - LETSENCRYPT_EMAIL=buitrungtinh130296@gmail.com
      networks:
