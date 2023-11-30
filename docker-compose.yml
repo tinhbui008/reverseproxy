@@ -10,6 +10,11 @@ services:
        dockerfile: ProductService/Dockerfile
      ports:
        - 5001:80
+     environment:
+       - VIRTUAL_HOST=dev.webchuyenghiep.com.vn
+       - VIRTUAL_PORT=80
+       - LETSENCRYPT_HOST=dev.webchuyenghiep.com.vn
+       - LETSENCRYPT_EMAIL=buitrungtinh130296@gmail.com
      networks:
        - backend-demo
    
