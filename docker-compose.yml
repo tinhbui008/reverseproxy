@@ -78,8 +78,8 @@ services:
     build:
       context: .
       dockerfile: ProductService/Dockerfile
-    ports:
-      - 5001:80
+    expose:
+      - 5001
     environment:
      VIRTUAL_HOST: dev.webchuyenghiep.com.vn
      LETSENCRYPT_HOST: dev.webchuyenghiep.com.vn
