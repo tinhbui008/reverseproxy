@@ -87,28 +87,11 @@ services:
     networks:
       - backend
 
-
-  #app:
-  #  build: ./web
-  #  expose:
-  #    - "8080"
-  #  restart: always
-  #  networks:
-  #    - application
-  #  environment:
-  #    # in production we should redirect to SSL but in dev set this to noredirect
-  #    HTTPS_METHOD: "${HTTPS_METHOD}"
-
-  #    # in development these should be localhost but in production these should be the domain you are using
-  #    VIRTUAL_HOST: "${VIRTUAL_HOST}"
-  #    LETSENCRYPT_HOST: "${LETSENCRYPT_HOST}"
-      #LETSENCRYPT_EMAIL: "${LETSENCRYPT_EMAIL}"
-
   nginx-proxy:
     image: jwilder/nginx-proxy:alpine
     ports:
-      - "80:80"
-      - "443:443"
+      - 80:80
+      - 443:443
     volumes:
       - static:/app/app/static/
       - vhost:/etc/nginx/vhost.d
@@ -133,7 +116,7 @@ services:
       - backend
     depends_on:
       - nginx-proxy
-    profiles: ["production"] # only run the lets encrypt service in production
+    profiles: ["production"]
 
 volumes:
   html:
