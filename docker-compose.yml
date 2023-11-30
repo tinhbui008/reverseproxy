@@ -29,7 +29,7 @@ services:
        - 5010:443
      environment:
        - ASPNETCORE_URLS=https://+;http://+
-       - PUBLIC_URL=https://localhost:5001
+       #- PUBLIC_URL=https://localhost:5001
        - ASPNETCORE_HTTPS_PORT=5010
      networks:
        - backend-demo
