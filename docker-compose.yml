@@ -116,7 +116,8 @@ services:
       - backend
     depends_on:
       - nginx-proxy
-    profiles: ["production"]
+    profiles:
+      - production
 
 volumes:
   html:
